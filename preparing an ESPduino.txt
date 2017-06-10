@@ -26,3 +26,18 @@ Help on installing libraries is available on the Arduino website;
 
 https://www.arduino.cc/en/Guide/Libraries
 
+
+
+
+Uploading to the ESPduino.
+
+Assuming that you can now successfully compile the sketch, you will still need to connect the ESPduino to the computer to install the boilerplate. After this, every time you want to update the firmware, you can do it 'Over The Air'.
+
+Connect the ESPduino to the computer via USB. Go to Tools > Port to select the correct port. Check that the Tools > Board is set to ESPduino too.
+
+Don't forget to set the ESPduino into flashing mode before trying to upload.
+
+Hint: Keep the Com port monitor open, when the program runs for the first time, the ESPduino will identify itself. It is quite useful to write this on a label and attach it to the PCB if you're doing a batch of them. It makes them easier to identify afterwards.
+
+Good luck, and above all, have fun.
+
