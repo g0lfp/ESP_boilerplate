@@ -33,7 +33,9 @@ Uploading to the ESPduino.
 
 Assuming that you can now successfully compile the sketch, you will still need to connect the ESPduino to the computer to install the boilerplate. After this, every time you want to update the firmware, you can do it 'Over The Air'.
 
-Connect the ESPduino to the computer via USB. Go to Tools > Port to select the correct port. Check that the Tools > Board is set to ESPduino too.
+Connect the ESPduino to the computer via USB. Go to Tools > Port to select the correct port. Check that the Tools > Board is set to ESP8266.
+
+Flash is 4M (1M SPIFFS)
 
 Don't forget to set the ESPduino into flashing mode before trying to upload.
 
