@@ -30,11 +30,15 @@ ESP8266WebServer httpServer(80);
 ESP8266HTTPUpdateServer httpUpdater;
 
 const char* host = "esp8266-http-Update";
+#define LEDPIN 16
+
+
 
 void setup() 
 {
   // Setup code goes here, runs once
   Serial.begin(115200);
+  pinMode(LEDPIN,OUTPUT);
 
    //WiFiManager
   //Local intialization. Once its business is done, there is no need to keep it around
@@ -80,7 +84,7 @@ void loop(void)
 
   
  
-     httpServer.handleClient();
+  httpServer.handleClient();
     
   HTTPClient http;
 
@@ -92,17 +96,28 @@ void loop(void)
   if(httpCode > 0) 
     {    
     // Page load success
-      String payload = http.getString();     
-      
-      
+      String payload = http.getString();
     }
     else
     {
     // handle page load failure
-    delay(5000);  // this also acts as a yield to the uP such that the update can take place.
+    // Heartbeat flashing LED, this also acts as a yield to the uP such that the update can take place.
+    for (int i = 0; i< 30; i++)
+      {
+      digitalWrite(LEDPIN, HIGH);   
+      delay(500);  
+      httpServer.handleClient();
+      digitalWrite(LEDPIN, LOW);    
+      httpServer.handleClient();
+      delay(500);  
+      }
+      
     }
 
-    t_httpUpdate_return ret = ESPhttpUpdate.update("http://www.yourdomain/ESPprogram.bin");
+    //The line below tells the ESPduino where to go looking for an update. 
+    // it's probably not a good idea to have it constantly hitting a server.
+    // The line is left here as an example for you to edit and use at your discretion.
+    //t_httpUpdate_return ret = ESPhttpUpdate.update("http://www.yourdomain/ESPprogram.bin");
     
     http.end();
    
