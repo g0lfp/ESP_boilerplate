@@ -1,0 +1,28 @@
+Initial setup
+
+
+Download and install the Arduino IDE (at the time of writing v1.8.3)
+When the IDE has finished installing, you will need to add support for the ESP family. This isn't (yet) built into the boards manager, so you will have to manually add them.
+
+Run the IDE and go to File > Preferences.
+
+The additional boards manager URLs are at the bottom of the page.
+
+Cut and paste the following address into that text box.
+
+ http://arduino.esp8266.com/stable/package_esp8266com_index.json
+
+and click OK
+
+Now to install support for the ESP in the IDE you will have to manually install them. Go to Tools > Board > Boards manager. Scroll down to the ESP family and click in the box. You will be offered the latest version. Click on Install. This may take a few minutes, but when it's done your IDE will be ESP 'ready'.
+
+In order to compile the sketch, a library will need to be added to the IDE.
+
+The wifi-manager by tzapu which is available on his github repository;
+
+https://github.com/tzapu/WiFiManager
+
+Help on installing libraries is available on the Arduino website;
+
+https://www.arduino.cc/en/Guide/Libraries
+
