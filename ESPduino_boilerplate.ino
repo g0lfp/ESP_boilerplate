@@ -31,7 +31,28 @@ ESP8266HTTPUpdateServer httpUpdater;
 
 const char* host = "esp8266-http-Update";
 #define LEDPIN 16
+void handleRoot() {
+  digitalWrite(LEDPIN, 1);
+  httpServer.send(200, "text/plain", "hello from esp8266!");
+  digitalWrite(LEDPIN, 0);
+}
 
+void handleNotFound(){
+  digitalWrite(LEDPIN, 1);
+  String message = "File Not Found\n\n";
+  message += "URI: ";
+  message += httpServer.uri();
+  message += "\nMethod: ";
+  message += (httpServer.method() == HTTP_GET)?"GET":"POST";
+  message += "\nArguments: ";
+  message += httpServer.args();
+  message += "\n";
+  for (uint8_t i=0; i<httpServer.args(); i++){
+    message += " " + httpServer.argName(i) + ": " + httpServer.arg(i) + "\n";
+  }
+  httpServer.send(404, "text/plain", message);
+  digitalWrite(LEDPIN, 0);
+}
 
 
 void setup() 
@@ -72,11 +93,22 @@ void setup()
 
   
   // This chunk enables the update bin server.
-    MDNS.begin(host);
-    httpUpdater.setup(&httpServer);
+  MDNS.begin(host);
+  httpUpdater.setup(&httpServer);
+
+  httpServer.on("/", handleRoot);
+
+  httpServer.on("/inline", []()
+    {
+    httpServer.send(200, "text/plain", "this works as well");
+    }
+  );
+  httpServer.onNotFound(handleNotFound);
+  Serial.println("HTTP server started");
     httpServer.begin();
     MDNS.addService("http", "tcp", 80);
     //Serial.printf("HTTPUpdateServer ready! Open http://%s.local/update in your browser\n", host);
+
 }
 
 void loop(void)
